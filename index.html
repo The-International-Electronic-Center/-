@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="International Electronic Center - Your trusted partner in electronics since 2008.">
+    <meta name="keywords" content="electronics, sales, maintenance, repair, installation, technical support">
+    <title>International Electronic Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        /* Existing styles... */
+        .fab-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #16799d;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .fab-menu {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .fab-menu a {
+            background-color: #314365;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .animated-texts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+        .animated-texts div {
+            position: absolute;
+            animation: slide 9s infinite;
+        }
+        @keyframes slide {
+            0% { top: 100%; }
+            10% { top: 0; }
+            30% { top: 0; }
+            40% { top: -100%; }
+            100% { top: -100%; }
+        }
+        .animated-texts div:nth-child(2) {
+            animation-delay: 3s;
+        }
+        .animated-texts div:nth-child(3) {
+            animation-delay: 6s;
+        }
+        .about-us {
+            background-color: #f0f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #1a202c;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        /* New styles for the navigation bar */
+        .navbar {
+            background-color: #1a202c;
+        }
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .navbar a:hover {
+            background-color: #2d3748;
+        }
+        .navbar .menu {
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .navbar .menu {
+                display: flex;
+            }
+        }
+        /* Dark mode styles */
+        body.dark {
+            background-color: #2d3748;
+            color: white;
+        }
+        .dark .navbar {
+            background-color: #4a5568;
+        }
+        .dark .bg-white {
+            background-color: #4a5568;
+            color: white;
+        }
+        .dark .text-gray-700 {
+            color: #e2e8f0;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading.active {
+            display: flex;
+        }
+        /* Carousel styles */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel img {
+            width: 100%;
+            height: auto;
+        }
+        /* FAQ styles */
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+        .faq-question {
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #f0f4f8;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .faq-question:hover {
+            background-color: #e2e8f0;
+        }
+        .faq-answer {
+            display: none;
+            padding: 1rem;
+            background-color: #f7fafc;
+            border-radius: 8px;
+        }
+        /* Animation styles for More From Us section */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animated-header {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .animated-text {
+            animation: fadeIn 1.2s ease-in-out forwards;
+        }
+
+        .animated-box {
+            animation: fadeIn 1.4s ease-in-out forwards;
+        }
+
+        .animated-list {
+            animation: fadeIn 1.6s ease-in-out forwards;
+        }
+
+        .list-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: bounce 0.6s ease forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .list-item:nth-child(1) {
+            --i: 1;
+        }
+
+        .list-item:nth-child(2) {
+            --i: 2;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="loading" id="loading">
+        <i class="fas fa-spinner fa-spin text-4xl"></i>
+    </div>
+    <!-- Header -->
+    <header class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="images/logo.png" alt="Company Logo" class="w-12 h-12 rounded-full mr-3"/>
+                <h1 class="text-2xl font-bold">International Electronic Center</h1>
+            </div>
+            <a class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg flex items-center" href="https://wa.me/201006316001">
+                <i class="fab fa-whatsapp mr-2"></i>
+                Chat on WhatsApp
+            </a>
+        </div>
+        <div><center><h3>V1.3</h3></center></div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container mx-auto flex justify-between">
+            <div class="menu">
+                <a href="#about-us">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#why-choose-us">Why Choose Us?</a>
+                <a href="#key-achievements">Key Achievements</a>
+                <a href="#our-clients">Our Clients</a>
+                <a href="#office-equipments">Office Equipments</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact-us">Contact Us</a>
+                <a href="#more-from-us">More From Us</a>
+            </div>
+            <div class="flex items-center">
+                <button class="text-white" onclick="toggleMenu()">Menu</button>
+                <button class="text-white ml-4" onclick="toggleDarkMode()">Dark Mode</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4">
+        <!-- Slide 2: About Us -->
+        <section class="my-8" id="about-us">
+            <h2 class="text-3xl font-bold mb-4">About Us</h2>
+            <div class="about-us">
+                <p>Welcome to The International Electronic Center, your trusted partner in the world of electronics since 2008.</p>
+                <p>Our mission is to provide top-quality electronics and maintenance services, ensuring excellence and customer satisfaction in every interaction.</p>
+            </div>
+        </section>
+        <!-- Slide 3: Our Services -->
+        <section class="my-8" id="services">
+            <h2 class="text-3xl font-bold mb-4">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img alt="High-quality electronic products display" class="w-full h-48 object-cover rounded-md mb-4" src="https://storage.googleapis.com/a1aa/image/m1jQBF42wEZgPgyb815TDd7oJiamFjnhH68iMjwxpVU.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-tv mr-2"></i>Electronics Sales</h3>
+                    <p>Discover our range of high-quality electronic products designed to meet your needs.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img alt="Professional servicing for electronic devices" class="w-full h-48 object-cover rounded-md mb-4" src="https://storage.googleapis.com/a1aa/image/dgbiMisqqokFdgVnTQIzZAY_3oM_WwEWe_LFTeN_pMU.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-tools mr-2"></i>Maintenance & Repair</h3>
+                    <p>Professional servicing for all your electronic devices, ensuring they function like new.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img alt="Setup and configuration of electronic systems" class="w-full h-48 object-cover rounded-md mb-4" src="https://storage.googleapis.com/a1aa/image/eA0XjhN4G9V9Jo1m_e2wuuGtXjQ8cDbhfpFBD45BPCw.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-cogs mr-2"></i>Installation Services</h3>
+                    <p>Expert setup and configuration of electronic systems tailored to your requirements.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img alt="Expert advice and troubleshooting" class="w-full h-48 object-cover rounded-md mb-4" src="https://storage.googleapis.com/a1aa/image/zmcNUswzhhSpde_6Gr0lmzk_khSWSa-WC3S9AMcahKM.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-headset mr-2"></i>Technical Support</h3>
+                    <p>Get expert advice and troubleshooting for all your technical issues.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Slide 4: Image Carousel -->
+        <section class="my-8" id="carousel">
+            <h2 class="text-3xl font-bold mb-4">Featured Products From : </h2>
+            <div class="carousel">
+                <div class="carousel-images" id="carousel-images">
+                    <img src="images/xerox.png" alt="Product 1" />
+                    <img src="images/toner.jpg" alt="Product 2" />
+                    <img src="images/hp.png" alt="Product 3" />
+                    <img src="images/office.jpg" alt="Product 3" />
+                    <img src="images/canon.png" alt="Product 3" />
+                </div>
+                <button onclick="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+        <!-- Slide 5: Why Choose Us? -->
+        <section class="my-8" id="why-choose-us">
+            <h2 class="text-3xl font-bold mb-4">Why Choose Us?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-user-tie text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Experienced Professionals</h3>
+                    <p>Our team of experienced and skilled professionals is dedicated to providing top-notch service.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-microchip text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Advanced Technology</h3>
+                    <p>We utilize the latest technology and tools to ensure the best results for our clients.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-clock text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Quick Service</h3>
+                    <p>Enjoy quick and reliable service that gets you back on track in no time.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-dollar-sign text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Competitive Pricing</h3>
+                    <p>We offer competitive pricing and customer-friendly policies to ensure you get the best value.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-thumbs-up text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Quality & Reliability</h3>
+                    <p>Our strong reputation for quality and reliability speaks for itself.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Slide 6: Key Achievements -->
+        <section class="my-8" id="key-achievements">
+            <h2 class="text-3xl font-bold mb-4">Key Achievements</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-calendar-alt text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">15+ Years of Service</h3>
+                    <p>Celebrating over 15 years of excellence in the electronics industry since 2008.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <div class="flex items-center justify-center w-full h-48 mb-4">
+                        <i class="fas fa-smile text-6xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Satisfied Clients</h3>
+                    <p>Proud to have a large base of satisfied clients and repeat customers.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Slide 7: Our Clients -->
+        <section class="my-8" id="our-clients">
+            <h2 class="text-3xl font-bold mb-4">Our Clients</h2>
+            <img alt="Group of satisfied clients posing together" class="w-full h-64 object-cover rounded-md mb-4" src="https://storage.googleapis.com/a1aa/image/vjmk_1myfhTazFXNQlBOwOqyt2WLKIbbBE6EZvrldqk.jpg"/>
+            <p>We proudly serve a diverse range of clients, including individuals, businesses, and industries.</p>
+            <p>Our long-term relationships with corporate and retail clients are a testament to our commitment to excellence.</p>
+            <p>Trusted by customers for our unwavering dedication to quality and service.</p>
+        </section>
+        <!-- Slide 8: Office Equipments -->
+        <section class="my-8" id="office-equipments">
+            <h2 class="text-3xl font-bold mb-4">Office Equipments</h2>
+            <div class="animated-texts text-2xl font-semibold mb-4">
+                <div>High quality Office equipments</div>
+                <div>Leading with top brands</div>
+                <div>Networking and computing</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="HP logo" class="w-full h-48 object-contain mb-4" src="https://storage.googleapis.com/a1aa/image/fSUUQUrGp9cjM69rT-TJrHgs5q_78NlEK1d6KgSk4lM.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2">HP</h3>
+                    <p>Innovative solutions for your office needs.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="Dell logo" class="w-full h-48 object-contain mb-4" src="https://storage.googleapis.com/a1aa/image/mc1Dm331HAV1WtBF-6QYwbi0qL0x7iS_TblVbJF-Qdw.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2">Dell</h3>
+                    <p>Empowering your business with reliable technology.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="Lenovo logo" class="w-full h-48 object-contain mb-4" src="https://storage.googleapis.com/a1aa/image/WD-HAsK5bVLfbRyX_wBxYO8_P6_waKHS5SVtbi8kjf8.jpg"/>
+                    <h3 class="text-xl font-semibold mb-2">Lenovo</h3>
+                    <p>Smart solutions for modern workplaces.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="Xerox logo" class="w-full h-48 object-contain mb-4" src="images/xerox.png"/>
+                    <h3 class="text-xl font-semibold mb-2">Xerox</h3>
+                    <p>High-quality printing solutions for your office.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="Canon logo" class="w-full h-48 object-contain mb-4" src="images/canon.png"/>
+                    <h3 class="text-xl font-semibold mb-2">Canon</h3>
+                    <p>Innovative imaging solutions for every need.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="Brother logo" class="w-full h-48 object-contain mb-4" src="images/brother.png"/>
+                    <h3 class="text-xl font-semibold mb-2">Brother</h3>
+                    <p>Reliable printers and office solutions.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img alt="Samsung logo" class="w-full h-48 object-contain mb-4" src="images/samsung.jpeg"/>
+                    <h3 class="text-xl font-semibold mb-2">Samsung</h3>
+                    <p>Advanced technology for your office needs.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Slide 12: More From Us -->
+        <section class="my-8" id="more-from-us">
+            <h2 class="text-3xl font-bold mb-4 animated-header">More From Us</h2>
+            <p class="mb-4 animated-text">Spare Parts To All Office Equipments</p>
+            <div class="bg-white p-4 rounded-lg shadow-md animated-box">
+                <h3 class="text-xl font-semibold mb-2">Available Spare Parts:</h3>
+                Toners <br>
+                ---------------------------------- <br>
+                Mother Boards <br>
+                ---------------------------------- <br>
+                GPUs <br>
+                ---------------------------------- <br>
+                CPUs <br>
+                <ul class="list-disc list-inside animated-list">
+                    <li class="list-item">Toners</li>
+                    <li class="list-item">Boards</li>
+                </ul>
+            </div>
+        </section>
+        <!-- Slide 9: FAQ Section -->
+        <section class="my-8" id="faq">
+            <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">What types of electronics do you sell?</div>
+                <div class="faq-answer">We offer a wide range of electronics including computers , office equipments.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">Do you provide warranty on your products?</div>
+                <div class="faq-answer">Yes, we provide a warranty on all our products. Please check the warranty details for each product.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">How can I contact customer support?</div>
+                <div class="faq-answer">You can contact us via phone, email, or through our contact form on the website.</div>
+            </div>
+        </section>
+        <!-- Slide 10: Newsletter Subscription -->
+        <section class="my-8" id="newsletter">
+            <h2 class="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
+            <form class="flex flex-col md:flex-row items-center" onsubmit="return validateForm()">
+                <input type="email" id="email" placeholder="Enter your email" class="border border-gray-300 p-2 rounded-md flex-grow mb-2 md:mb-0 md:mr-2" required/>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Subscribe</button>
+            </form>
+            <p id="subscription-message" class="mt-2 text-green-500 hidden">Thank you for subscribing!</p>
+        </section>
+        <!-- Slide 11: Contact Us -->
+        <section class="my-8" id="contact-us">
+            <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+            <form id="contact-form" class="flex flex-col">
+                <input type="text" placeholder="Your Name" class="border border-gray-300 p-2 rounded-md mb-2" required/>
+                <input type="email" placeholder="Your Email" class="border border-gray-300 p-2 rounded-md mb-2" required/>
+                <textarea placeholder="Your Message" class="border border-gray-300 p-2 rounded-md mb-2" rows="4" required></textarea>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Send Message</button>
+            </form>
+        </section>
+        
+        <!-- Disqus Comments Section -->
+        <!-- <section class="my-8" id="comments">
+            <h2 class="text-3xl font-bold mb-4">Comments</h2>
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = window.location.href;  // Replace with your page's canonical URL variable
+                    this.page.identifier = document.title; // Replace with your page's unique identifier variable
+                };
+
+                (function() { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://motasem_afifi.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+        </section> -->
+    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>© 2023 International Electronic Center. All rights reserved.</p>
+            <p>Follow us on:
+                <a class="text-blue-400 hover:text-blue-600" href="#"><i class="fab fa-facebook-f"></i></a>
+            </p>
+        </div>
+    </footer>
+    <!-- Floating Action Button -->
+    <div class="fab-button" id="fab" onclick="toggleFabMenu()">
+        <i class="fas fa-smile"></i>
+    </div>
+    <!-- Floating Menu -->
+    <div class="fab-menu" id="fab-menu">
+        <a href="#about-us" title="About Us"><i class="fas fa-info"></i></a>
+        <a href="#services" title="Services"><i class="fas fa-concierge-bell"></i></a>
+        <a href="#why-choose-us" title="Why Choose Us?"><i class="fas fa-question"></i></a>
+        <a href="#key-achievements" title="Key Achievements"><i class="fas fa-trophy"></i></a>
+        <a href="#our-clients" title="Our Clients"><i class="fas fa-users"></i></a>
+        <a href="#office-equipments" title="Office Equipments"><i class="fas fa-laptop"></i></a>
+    </div>
+    <div class="back-to-top" id="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    <script>
+        let currentSlide = 0;
+
+        function toggleFabMenu() {
+            const fabMenu = document.getElementById("fab-menu");
+            fabMenu.style.display = fabMenu.style.display === "flex" ? "none" : "flex";
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('#carousel-images img');
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            const slides = document.querySelectorAll('#carousel-images img');
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const carouselImages = document.getElementById('carousel-images');
+            const offset = -currentSlide * 100; // Assuming each image takes 100% width
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+        }
+
+        function validateForm() {
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('subscription-message');
+            if (email) {
+                message.classList.remove('hidden');
+                setTimeout(() => {
+                    message.classList.add('hidden');
+                }, 3000);
+                return false; // Prevent form submission for demo purposes
+            }
+            return true; // Allow form submission if needed
+        }
+
+        // Show loading animation on page load
+        window.onload = function() {
+            document.getElementById('loading').classList.remove('active');
+        };
+
+        window.onscroll = function() {
+            const backToTopButton = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
